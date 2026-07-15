@@ -157,9 +157,10 @@ private struct PetCard: View {
                     Text(store.stage.title)
                         .font(.headline)
                         .accessibilityIdentifier("pet.stage")
-                    Text(store.snapshot.petProfile.archetype.displayName)
+                    Text("\(store.snapshot.petProfile.resolvedPreset.defaultName) · \(store.snapshot.petProfile.resolvedPreset.role)")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("pet.preset.current")
                     Label(store.activity.label, systemImage: activityIcon)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -175,6 +176,7 @@ private struct PetCard: View {
 
             PetSpriteView(
                 name: store.snapshot.petProfile.name,
+                preset: store.snapshot.petProfile.resolvedPreset,
                 activity: store.activity,
                 stage: store.stage
             )
@@ -538,11 +540,11 @@ private struct PetProfileView: View {
     @EnvironmentObject private var store: AppStore
     @Environment(\.dismiss) private var dismiss
     @State private var name: String
-    @State private var archetype: PetArchetype
+    @State private var preset: PetPreset
 
     init(profile: PetProfile) {
         _name = State(initialValue: profile.name)
-        _archetype = State(initialValue: profile.archetype)
+        _preset = State(initialValue: profile.resolvedPreset)
     }
 
     private var trimmedName: String {
@@ -552,37 +554,36 @@ private struct PetProfileView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("你的 Hatch Pet") {
+                Section("第一版的 3 隻 Pet") {
+                    PetPresetPicker(selection: $preset)
+                }
+
+                Section("牠的名字") {
                     TextField("名字", text: $name)
                         .textInputAutocapitalization(.words)
                         .accessibilityIdentifier("pet.name")
-
-                    Picker("個性", selection: $archetype) {
-                        ForEach(PetArchetype.allCases) { option in
-                            Text(option.displayName).tag(option)
-                        }
-                    }
                 }
 
                 Section("個性表達") {
-                    Text(archetype.summary)
+                    LabeledContent("定位", value: preset.role)
+                    Text(preset.summary)
                         .foregroundStyle(.secondary)
                 }
 
                 Section("可稽核成長") {
                     LabeledContent("目前階段", value: store.stage.title)
                     LabeledContent("已驗證成長", value: "\(store.snapshot.petXP) XP")
+                    PetEvolutionPath(currentStage: store.stage, tint: preset.tint)
                     Text("只有使用者批准、執行完成且讀回驗證的任務才會獲得 20 XP；聊天、草稿、失敗與部分完成都不加分。")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
 
-                Section("專屬外觀") {
-                    Label("私人測試素材只在本機載入", systemImage: "lock.shield.fill")
-                        .foregroundStyle(.blue)
-                    Text("正式專屬外觀會由安全後端驗證簽章，並由 App 比對下載檔案雜湊後才啟用；素材缺少或驗證失敗時使用內建外觀。")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                CustomHatchStatusSection()
+            }
+            .onChange(of: preset) { previous, selected in
+                if trimmedName.isEmpty || name == previous.defaultName {
+                    name = selected.defaultName
                 }
             }
             .navigationTitle("我的 Hatch Pet")
@@ -593,7 +594,7 @@ private struct PetProfileView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        if store.updatePetProfile(name: trimmedName, archetype: archetype) {
+                        if store.updatePetProfile(name: trimmedName, preset: preset) {
                             dismiss()
                         }
                     }

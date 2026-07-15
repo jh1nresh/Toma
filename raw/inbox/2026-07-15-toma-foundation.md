@@ -24,7 +24,9 @@ Repo: `/Users/jhinresh/Documents/Codex/2026-07-15/new-chat/Toma`（獨立本機 
 
 ## Hatch 合約
 
-自訂外觀依序經過 `request → queued → generating → validating → ready → SHA-256 check → explicit activation`。只有符合 hatch-pet 8×11 v2 且 QA／hash 都通過的 package 能啟用；失敗時保留上一版 atlas。Foundation 不偽裝成已具備雲端圖像生成服務。
+第一版產品範圍固定為三個預設 Pet（芽芽／溫暖陪伴、火花／主動行動、雲朵／冷靜整理）與三個進化階段（初生／默契／守護），共九個狀態。選擇 Pet 不加 XP，也不提高工具權限。
+
+Foundation 只把自訂外觀願望標成 `saved locally`。完整流程依序是 `saved locally → Gateway accepted → queued → generating → validating → ready → signed receipt + local SHA-256 → explicit activation`。只有符合 hatch-pet 8×11 v2、QA／簽章／hash 與 request 綁定都通過的 package 能啟用；失敗時保留上一版 atlas。Foundation 不偽裝成已送出、已排隊或已具備雲端圖像生成服務。
 
 ## Hermes 方向
 

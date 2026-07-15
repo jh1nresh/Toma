@@ -4,20 +4,37 @@
 
 可以，但分兩階段完成：
 
-- 現在的 Foundation：每台裝置有一個本機 Pet Profile，可設定名字與原型，成長紀錄可稽核。
+- 現在的 Foundation：每台裝置有一個本機 Pet Profile，可從三隻預設 Pet 中選擇並改名，成長紀錄可稽核。
 - Gateway 上線後：每個已登入使用者擁有一個或多個 tenant-scoped `PetProfile`，可跨裝置同步；pet、記憶、收據與 connector 授權都綁定 owner。
 
-個人化外觀不是即時任意圖片。hatch request 走固定流程：
+第一版固定只有三個選擇：
+
+| Pet | 定位 | 行為語氣 |
+|---|---|---|
+| 芽芽 | 溫暖・陪伴型 | 先接住感受，再陪使用者走下一步 |
+| 火花 | 主動・行動型 | 把想法變成清楚、可批准的行動 |
+| 雲朵 | 冷靜・整理型 | 把混亂整理成安定、有順序的選擇 |
+
+選擇只改 Pet 身份、色彩徽記與個性表達，不會增加 XP 或權限。Foundation 的三隻 Pet 共用目前的本機動畫原型；三套各自完整的 8×11 v2 atlas 是後續素材里程碑，尚不能宣稱已完成。
+
+個人化外觀不是即時任意圖片。Foundation 只會先把使用者的文字與風格願望儲存在這台 iPhone；這個本機狀態不代表已送出，也不能冒充 Gateway 的 `queued`。完整流程是：
 
 ```text
-request -> queued -> generating -> validating -> ready
-                                      |             |
-                                      +-> failed    +-> SHA-256 check -> 使用者明確啟用
+saved locally -> Gateway accepted -> queued -> generating -> validating -> ready
+                                                  |             |
+                                                  +-> failed    +-> signed receipt + local SHA-256
+                                                                      -> 使用者明確啟用
 ```
 
-新 package 必須符合 hatch-pet 的 8×11 v2 atlas 合約、通過結構與視覺 QA，下載後比對 SHA-256。只有 `ready` 且 hash 正確的 package 能啟用；任何產生、驗證或下載失敗都繼續使用上一版 atlas。本機可能存在由使用者提供的私人 starter atlas；它已被 Git 忽略，只能進入本機 Debug build，不得上傳、重製、進入 Release build 或送給外部 provider。
+本機願望綁定 `clientRequestID`、pet、所選預設 Pet、目前成長階段、目前 package 與預期下一版；修改會建立新的 ID 與 digest。切換預設 Pet 或進化後，原願望會保留但標成需要重新確認，不會自動重綁。使用者可以編輯或刪除，且它不會改變 XP、記憶、Agent 行為、工具權限或目前外觀。
+
+新 package 必須符合 hatch-pet 的 8×11 v2 atlas 合約、通過結構與視覺 QA，下載後由 App 對實際 bytes 計算 SHA-256。只有已驗證 Gateway 簽章、所有 request／pet／stage／version 綁定一致，且使用者再次明確確認的 package 能啟用；任何產生、驗證或下載失敗都繼續使用上一版 atlas。等待期間若 pet 階段或基礎版本改變，舊結果視為不相容，必須重新提出願望，不能自動改寫或啟用。
+
+本機可能存在由使用者提供的私人 starter atlas；它已被 Git 忽略，只能進入本機 Debug build，不得上傳、重製、進入 Release build 或送給外部 provider。
 
 ## 進化
+
+第一版固定三隻 Pet × 三個階段，共九個明確產品狀態；不再增加第四隻或第四階段。
 
 | XP | 階段 | 可見變化 |
 |---:|---|---|

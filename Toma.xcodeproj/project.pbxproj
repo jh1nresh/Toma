@@ -7,191 +7,215 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05B6F22906339392E55F6ABD /* TomaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92A41439812ECAF7A3A88CC /* TomaApp.swift */; };
-		09C1F774AFA0994C9B52DC94 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AB42FB3079E65DEBA72DDA /* Models.swift */; };
-		2A006B3D3899830B49FCC917 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D662EA4EA927A3AD33230928 /* Foundation.framework */; };
-		38487D37C787FE748E6B9A64 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1957F9F5A342996897B819 /* ReminderScheduler.swift */; };
-		5519CE9E4E66ADC83CBD15A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D662EA4EA927A3AD33230928 /* Foundation.framework */; };
-		5E3CBF4F6BE0D85DE0F47B3C /* SnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */; };
-		601FDD4A03758EB82704574B /* TomaIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABC77B99C77CAD219528A8 /* TomaIntents.swift */; };
-		8BB0C0E56F0012CFEF51C632 /* AgentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79C9E0CF4749C260969ACD /* AgentGateway.swift */; };
-		B33454D54AE15195A255FEA6 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83A7C51D85D16816B2317F9 /* AppStore.swift */; };
-		BE4CA32B9CE5C232FA03AC0E /* TomaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B50AA68662F974D4BEB787 /* TomaTests.swift */; };
-		BF8081EB33F9D09C7E1AAE22 /* PetSpriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B3545BD8F9264A2D998BED /* PetSpriteView.swift */; };
-		C10F21AFC724E41E583A3F0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D662EA4EA927A3AD33230928 /* Foundation.framework */; };
-		CD2835AED68D9AA580BBF72E /* SpeechInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5817C7928E236815967C8 /* SpeechInput.swift */; };
-		E1EEF87B8C0CF7E3BD50713A /* TomaTrustLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830AC2AE55B06CD38A6A95FD /* TomaTrustLoopUITests.swift */; };
-		F597164FFB913B4E6CB8E5B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B5A056F611952B22BA5D3 /* ContentView.swift */; };
+		069C613F50D139371EF9E8E2 /* TomaTrustLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843EFEB582DFFFD43200A086 /* TomaTrustLoopUITests.swift */; };
+		1D3943A6F532BA79CFFD23BA /* PetIdentityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7E7A4775D3DC936CF6CE77 /* PetIdentityViews.swift */; };
+		213DDBF447363F495741A099 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382DC2F7B5317AC05A7D117E /* Foundation.framework */; };
+		28435547DB856EF7D31294B7 /* TomaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7338295F7E30FF67A2E7C2CF /* TomaTests.swift */; };
+		2A1F3AEBFEFDE6E31840B68E /* SpeechInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B28935DF9CAF9C5DEFC1E51 /* SpeechInput.swift */; };
+		4A6C4C12FFB33AF922F0A45C /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A84D07EA7FA28ABE1CAE99D /* AppStore.swift */; };
+		562FD8CCBCE9BB163805219F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382DC2F7B5317AC05A7D117E /* Foundation.framework */; };
+		6129EF468B0CFBA3B2439BE9 /* CustomHatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7382AA4A0FFC0F2024A2463D /* CustomHatchView.swift */; };
+		6401E7D58E3AFE0678F54E38 /* SnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C135280802478FD223B84007 /* SnapshotStore.swift */; };
+		6A734AFB5E5B8AA9D8FB2206 /* AgentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3252680F1BCBAEFD165BE48A /* AgentGateway.swift */; };
+		92F823629F7F440FB6853590 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27579AD638A0DFAB17B522F /* ContentView.swift */; };
+		96533A98F3B511C3198A3FC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382DC2F7B5317AC05A7D117E /* Foundation.framework */; };
+		9E859E763FFB93A2A5F38E05 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7F3A7178CE209E2D8AA552 /* ReminderScheduler.swift */; };
+		CA0D0AB8879E5DCF4FD8169F /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B6758DA3A1A758287EF76B /* Models.swift */; };
+		E40285502969E086060B27CC /* PetSpriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9F8A52DD703970091CC2BC /* PetSpriteView.swift */; };
+		E97110F0F3C217C27CCE062C /* TomaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7703B73D888BB11493194C23 /* TomaApp.swift */; };
+		FBC9B159CED15E925EF070AE /* TomaIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D74680EEBD0E40A05E93A /* TomaIntents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1DD2541427C397FD41235D5F /* PBXContainerItemProxy */ = {
+		08B4DD0BC3C5A39539BE482F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4B1111D97BB878A2332054A7 /* Project object */;
+			containerPortal = 2917543000B4AE23AAAD2DDF /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 959873B23E0E8667FD7999D5;
+			remoteGlobalIDString = CEC5B4A32C0B9C3EFCFD269D;
 			remoteInfo = Toma;
 		};
-		E0D48B8BD92CFA2E0FD161B8 /* PBXContainerItemProxy */ = {
+		65D127864D26C3015A3BA91B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4B1111D97BB878A2332054A7 /* Project object */;
+			containerPortal = 2917543000B4AE23AAAD2DDF /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 959873B23E0E8667FD7999D5;
+			remoteGlobalIDString = CEC5B4A32C0B9C3EFCFD269D;
 			remoteInfo = Toma;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14B3545BD8F9264A2D998BED /* PetSpriteView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PetSpriteView.swift; path = Views/PetSpriteView.swift; sourceTree = "<group>"; };
-		2EB733F5F2B9DC7F1D4E6F8D /* Toma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toma.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		61AB42FB3079E65DEBA72DDA /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Domain/Models.swift; sourceTree = "<group>"; };
-		6CC5817C7928E236815967C8 /* SpeechInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeechInput.swift; path = Services/SpeechInput.swift; sourceTree = "<group>"; };
-		7E4D97B737949CAFF88D1A1B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		830AC2AE55B06CD38A6A95FD /* TomaTrustLoopUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTrustLoopUITests.swift; sourceTree = "<group>"; };
-		8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SnapshotStore.swift; path = Services/SnapshotStore.swift; sourceTree = "<group>"; };
-		9EBF5F724D5863109BB597AB /* TomaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0ABC77B99C77CAD219528A8 /* TomaIntents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TomaIntents.swift; path = App/TomaIntents.swift; sourceTree = "<group>"; };
-		A83A7C51D85D16816B2317F9 /* AppStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppStore.swift; path = Domain/AppStore.swift; sourceTree = "<group>"; };
-		A92A41439812ECAF7A3A88CC /* TomaApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TomaApp.swift; path = App/TomaApp.swift; sourceTree = "<group>"; };
-		BC1957F9F5A342996897B819 /* ReminderScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReminderScheduler.swift; path = Services/ReminderScheduler.swift; sourceTree = "<group>"; };
-		D24B5A056F611952B22BA5D3 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Views/ContentView.swift; sourceTree = "<group>"; };
-		D662EA4EA927A3AD33230928 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DA79C9E0CF4749C260969ACD /* AgentGateway.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgentGateway.swift; path = Services/AgentGateway.swift; sourceTree = "<group>"; };
-		E2B50AA68662F974D4BEB787 /* TomaTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTests.swift; sourceTree = "<group>"; };
-		F22971B2DDAED50503D030B5 /* TomaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08B4100869DA683252016B11 /* TomaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A84D07EA7FA28ABE1CAE99D /* AppStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppStore.swift; path = Domain/AppStore.swift; sourceTree = "<group>"; };
+		1E7E7A4775D3DC936CF6CE77 /* PetIdentityViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PetIdentityViews.swift; path = Views/PetIdentityViews.swift; sourceTree = "<group>"; };
+		2A9F8A52DD703970091CC2BC /* PetSpriteView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PetSpriteView.swift; path = Views/PetSpriteView.swift; sourceTree = "<group>"; };
+		2F5F59F63006C194638568DE /* TomaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3252680F1BCBAEFD165BE48A /* AgentGateway.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgentGateway.swift; path = Services/AgentGateway.swift; sourceTree = "<group>"; };
+		382DC2F7B5317AC05A7D117E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7338295F7E30FF67A2E7C2CF /* TomaTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTests.swift; sourceTree = "<group>"; };
+		7382AA4A0FFC0F2024A2463D /* CustomHatchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomHatchView.swift; path = Views/CustomHatchView.swift; sourceTree = "<group>"; };
+		7703B73D888BB11493194C23 /* TomaApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TomaApp.swift; path = App/TomaApp.swift; sourceTree = "<group>"; };
+		843EFEB582DFFFD43200A086 /* TomaTrustLoopUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTrustLoopUITests.swift; sourceTree = "<group>"; };
+		866D74680EEBD0E40A05E93A /* TomaIntents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TomaIntents.swift; path = App/TomaIntents.swift; sourceTree = "<group>"; };
+		8B28935DF9CAF9C5DEFC1E51 /* SpeechInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeechInput.swift; path = Services/SpeechInput.swift; sourceTree = "<group>"; };
+		8B6B2658194FD800E5770834 /* Toma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0AB07CF31AA8BA6CE5B537 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C135280802478FD223B84007 /* SnapshotStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SnapshotStore.swift; path = Services/SnapshotStore.swift; sourceTree = "<group>"; };
+		C27579AD638A0DFAB17B522F /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Views/ContentView.swift; sourceTree = "<group>"; };
+		C5B6758DA3A1A758287EF76B /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Domain/Models.swift; sourceTree = "<group>"; };
+		CB7F3A7178CE209E2D8AA552 /* ReminderScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReminderScheduler.swift; path = Services/ReminderScheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5ACF7879A05656C0923672E4 /* Frameworks */ = {
+		70E1A53C4417289B22D6D449 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C10F21AFC724E41E583A3F0F /* Foundation.framework in Frameworks */,
+				213DDBF447363F495741A099 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		77C80D5B873FD4DD13ADBCAD /* Frameworks */ = {
+		8BD4C448D953DEF31103983F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5519CE9E4E66ADC83CBD15A0 /* Foundation.framework in Frameworks */,
+				96533A98F3B511C3198A3FC8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8576032B39839E225C34B36B /* Frameworks */ = {
+		D64427283593BD778681481C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A006B3D3899830B49FCC917 /* Foundation.framework in Frameworks */,
+				562FD8CCBCE9BB163805219F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1E7037B2AE88B5A2D8027D30 /* iOS */ = {
+		081BF8819A1A3890DA4A0A23 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				D662EA4EA927A3AD33230928 /* Foundation.framework */,
+				382DC2F7B5317AC05A7D117E /* Foundation.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		888C75C494355CF57F5573AF /* Frameworks */ = {
+		6A3CA7B3DB0B308D69E5639B /* TomaUITests */ = {
 			isa = PBXGroup;
 			children = (
-				1E7037B2AE88B5A2D8027D30 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		92BDE73F83885E9C081511E3 /* Toma */ = {
-			isa = PBXGroup;
-			children = (
-				A92A41439812ECAF7A3A88CC /* TomaApp.swift */,
-				A0ABC77B99C77CAD219528A8 /* TomaIntents.swift */,
-				A83A7C51D85D16816B2317F9 /* AppStore.swift */,
-				61AB42FB3079E65DEBA72DDA /* Models.swift */,
-				DA79C9E0CF4749C260969ACD /* AgentGateway.swift */,
-				BC1957F9F5A342996897B819 /* ReminderScheduler.swift */,
-				8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */,
-				6CC5817C7928E236815967C8 /* SpeechInput.swift */,
-				D24B5A056F611952B22BA5D3 /* ContentView.swift */,
-				14B3545BD8F9264A2D998BED /* PetSpriteView.swift */,
-				7E4D97B737949CAFF88D1A1B /* Info.plist */,
-			);
-			name = Toma;
-			path = Toma;
-			sourceTree = "<group>";
-		};
-		B13296AB68C10D2F851E0CA4 /* TomaTests */ = {
-			isa = PBXGroup;
-			children = (
-				E2B50AA68662F974D4BEB787 /* TomaTests.swift */,
-			);
-			name = TomaTests;
-			path = TomaTests;
-			sourceTree = "<group>";
-		};
-		C715CFA10F9AB4317F1F375B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2EB733F5F2B9DC7F1D4E6F8D /* Toma.app */,
-				9EBF5F724D5863109BB597AB /* TomaTests.xctest */,
-				F22971B2DDAED50503D030B5 /* TomaUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		CECEF4CF7F48938FB83E55EA = {
-			isa = PBXGroup;
-			children = (
-				C715CFA10F9AB4317F1F375B /* Products */,
-				888C75C494355CF57F5573AF /* Frameworks */,
-				92BDE73F83885E9C081511E3 /* Toma */,
-				B13296AB68C10D2F851E0CA4 /* TomaTests */,
-				DDE604750DA83BFB8C268845 /* TomaUITests */,
-			);
-			sourceTree = "<group>";
-		};
-		DDE604750DA83BFB8C268845 /* TomaUITests */ = {
-			isa = PBXGroup;
-			children = (
-				830AC2AE55B06CD38A6A95FD /* TomaTrustLoopUITests.swift */,
+				843EFEB582DFFFD43200A086 /* TomaTrustLoopUITests.swift */,
 			);
 			name = TomaUITests;
 			path = TomaUITests;
 			sourceTree = "<group>";
 		};
+		7840FB42C66F638CEB242D58 = {
+			isa = PBXGroup;
+			children = (
+				BE4A32B6B1AED2D3659D9125 /* Products */,
+				8B2951381382CE7BE2AC7B27 /* Frameworks */,
+				9326DCFF1AC9D0EBB9FDDA31 /* Toma */,
+				D93167AD9E0B9EE406659719 /* TomaTests */,
+				6A3CA7B3DB0B308D69E5639B /* TomaUITests */,
+			);
+			sourceTree = "<group>";
+		};
+		8B2951381382CE7BE2AC7B27 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				081BF8819A1A3890DA4A0A23 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9326DCFF1AC9D0EBB9FDDA31 /* Toma */ = {
+			isa = PBXGroup;
+			children = (
+				7703B73D888BB11493194C23 /* TomaApp.swift */,
+				866D74680EEBD0E40A05E93A /* TomaIntents.swift */,
+				0A84D07EA7FA28ABE1CAE99D /* AppStore.swift */,
+				C5B6758DA3A1A758287EF76B /* Models.swift */,
+				3252680F1BCBAEFD165BE48A /* AgentGateway.swift */,
+				CB7F3A7178CE209E2D8AA552 /* ReminderScheduler.swift */,
+				C135280802478FD223B84007 /* SnapshotStore.swift */,
+				8B28935DF9CAF9C5DEFC1E51 /* SpeechInput.swift */,
+				C27579AD638A0DFAB17B522F /* ContentView.swift */,
+				7382AA4A0FFC0F2024A2463D /* CustomHatchView.swift */,
+				1E7E7A4775D3DC936CF6CE77 /* PetIdentityViews.swift */,
+				2A9F8A52DD703970091CC2BC /* PetSpriteView.swift */,
+				8F0AB07CF31AA8BA6CE5B537 /* Info.plist */,
+			);
+			name = Toma;
+			path = Toma;
+			sourceTree = "<group>";
+		};
+		BE4A32B6B1AED2D3659D9125 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8B6B2658194FD800E5770834 /* Toma.app */,
+				2F5F59F63006C194638568DE /* TomaTests.xctest */,
+				08B4100869DA683252016B11 /* TomaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D93167AD9E0B9EE406659719 /* TomaTests */ = {
+			isa = PBXGroup;
+			children = (
+				7338295F7E30FF67A2E7C2CF /* TomaTests.swift */,
+			);
+			name = TomaTests;
+			path = TomaTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3F58B7D14FAE368859C4E5E5 /* TomaUITests */ = {
+		4F2EE2B5CEB89F68E556D6AA /* TomaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 54C27C7C0C3BF967083265F1 /* Build configuration list for PBXNativeTarget "TomaUITests" */;
+			buildConfigurationList = 62432BE41DCDAD78610B0E7A /* Build configuration list for PBXNativeTarget "TomaTests" */;
 			buildPhases = (
-				5F2E12F8185136E81154B065 /* Sources */,
-				77C80D5B873FD4DD13ADBCAD /* Frameworks */,
-				10BE5AB8B5EDA5724DED6538 /* Resources */,
+				F9A2CCB52EF82444856EEE3D /* Sources */,
+				8BD4C448D953DEF31103983F /* Frameworks */,
+				9CD31228E619744D35C3371B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2E0D83544A1E342A5803A85D /* PBXTargetDependency */,
+				8C4351ECB94C8351447D718D /* PBXTargetDependency */,
+			);
+			name = TomaTests;
+			productName = TomaTests;
+			productReference = 2F5F59F63006C194638568DE /* TomaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9CDE292C409A43897EF476E1 /* TomaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C0100A5360154F85C76E9E7 /* Build configuration list for PBXNativeTarget "TomaUITests" */;
+			buildPhases = (
+				8BCBF876A77B2AB7A117FFE3 /* Sources */,
+				D64427283593BD778681481C /* Frameworks */,
+				15C767BB78C019548F7EF0B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50418BAC9AB4C6EACEECD558 /* PBXTargetDependency */,
 			);
 			name = TomaUITests;
 			productName = TomaUITests;
-			productReference = F22971B2DDAED50503D030B5 /* TomaUITests.xctest */;
+			productReference = 08B4100869DA683252016B11 /* TomaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		959873B23E0E8667FD7999D5 /* Toma */ = {
+		CEC5B4A32C0B9C3EFCFD269D /* Toma */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E6496AF7B43970FB69A50157 /* Build configuration list for PBXNativeTarget "Toma" */;
+			buildConfigurationList = 547DEA976B4F1D2166BA3ED0 /* Build configuration list for PBXNativeTarget "Toma" */;
 			buildPhases = (
-				D4982F53E99B7815E8D5F42E /* Sources */,
-				5ACF7879A05656C0923672E4 /* Frameworks */,
-				779407A012468B94CD8DFB37 /* Resources */,
-				DD4A2EF8E133BDBA826327F3 /* Copy private pet sprite for local Debug builds */,
+				01AAA1FFB26C84A6C0F3940A /* Sources */,
+				70E1A53C4417289B22D6D449 /* Frameworks */,
+				2799983C99B6093CE297D750 /* Resources */,
+				6BB486E821745FFF36BEDDBF /* Copy private pet sprite for local Debug builds */,
 			);
 			buildRules = (
 			);
@@ -199,37 +223,19 @@
 			);
 			name = Toma;
 			productName = Toma;
-			productReference = 2EB733F5F2B9DC7F1D4E6F8D /* Toma.app */;
+			productReference = 8B6B2658194FD800E5770834 /* Toma.app */;
 			productType = "com.apple.product-type.application";
-		};
-		BBE7994CD856E1F7070EB628 /* TomaTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 63B004FEFEEF0EC0E991BE3D /* Build configuration list for PBXNativeTarget "TomaTests" */;
-			buildPhases = (
-				157F3EA33E17AF3A8D47899E /* Sources */,
-				8576032B39839E225C34B36B /* Frameworks */,
-				90BD24BE8BE78CCF208ADB1D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6DB8C6464E4A4C3F585F4EC6 /* PBXTargetDependency */,
-			);
-			name = TomaTests;
-			productName = TomaTests;
-			productReference = 9EBF5F724D5863109BB597AB /* TomaTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		4B1111D97BB878A2332054A7 /* Project object */ = {
+		2917543000B4AE23AAAD2DDF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 			};
-			buildConfigurationList = 5D323F44A367F93BE609A041 /* Build configuration list for PBXProject "Toma" */;
+			buildConfigurationList = FA56E4C9619F44EEAA92F1CB /* Build configuration list for PBXProject "Toma" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -237,34 +243,34 @@
 				en,
 				Base,
 			);
-			mainGroup = CECEF4CF7F48938FB83E55EA;
-			productRefGroup = C715CFA10F9AB4317F1F375B /* Products */;
+			mainGroup = 7840FB42C66F638CEB242D58;
+			productRefGroup = BE4A32B6B1AED2D3659D9125 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				959873B23E0E8667FD7999D5 /* Toma */,
-				BBE7994CD856E1F7070EB628 /* TomaTests */,
-				3F58B7D14FAE368859C4E5E5 /* TomaUITests */,
+				CEC5B4A32C0B9C3EFCFD269D /* Toma */,
+				4F2EE2B5CEB89F68E556D6AA /* TomaTests */,
+				9CDE292C409A43897EF476E1 /* TomaUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		10BE5AB8B5EDA5724DED6538 /* Resources */ = {
+		15C767BB78C019548F7EF0B1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		779407A012468B94CD8DFB37 /* Resources */ = {
+		2799983C99B6093CE297D750 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		90BD24BE8BE78CCF208ADB1D /* Resources */ = {
+		9CD31228E619744D35C3371B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -274,7 +280,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		DD4A2EF8E133BDBA826327F3 /* Copy private pet sprite for local Debug builds */ = {
+		6BB486E821745FFF36BEDDBF /* Copy private pet sprite for local Debug builds */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -296,75 +302,60 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		157F3EA33E17AF3A8D47899E /* Sources */ = {
+		01AAA1FFB26C84A6C0F3940A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE4CA32B9CE5C232FA03AC0E /* TomaTests.swift in Sources */,
+				E97110F0F3C217C27CCE062C /* TomaApp.swift in Sources */,
+				FBC9B159CED15E925EF070AE /* TomaIntents.swift in Sources */,
+				4A6C4C12FFB33AF922F0A45C /* AppStore.swift in Sources */,
+				CA0D0AB8879E5DCF4FD8169F /* Models.swift in Sources */,
+				6A734AFB5E5B8AA9D8FB2206 /* AgentGateway.swift in Sources */,
+				9E859E763FFB93A2A5F38E05 /* ReminderScheduler.swift in Sources */,
+				6401E7D58E3AFE0678F54E38 /* SnapshotStore.swift in Sources */,
+				2A1F3AEBFEFDE6E31840B68E /* SpeechInput.swift in Sources */,
+				92F823629F7F440FB6853590 /* ContentView.swift in Sources */,
+				6129EF468B0CFBA3B2439BE9 /* CustomHatchView.swift in Sources */,
+				1D3943A6F532BA79CFFD23BA /* PetIdentityViews.swift in Sources */,
+				E40285502969E086060B27CC /* PetSpriteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5F2E12F8185136E81154B065 /* Sources */ = {
+		8BCBF876A77B2AB7A117FFE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1EEF87B8C0CF7E3BD50713A /* TomaTrustLoopUITests.swift in Sources */,
+				069C613F50D139371EF9E8E2 /* TomaTrustLoopUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4982F53E99B7815E8D5F42E /* Sources */ = {
+		F9A2CCB52EF82444856EEE3D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05B6F22906339392E55F6ABD /* TomaApp.swift in Sources */,
-				601FDD4A03758EB82704574B /* TomaIntents.swift in Sources */,
-				B33454D54AE15195A255FEA6 /* AppStore.swift in Sources */,
-				09C1F774AFA0994C9B52DC94 /* Models.swift in Sources */,
-				8BB0C0E56F0012CFEF51C632 /* AgentGateway.swift in Sources */,
-				38487D37C787FE748E6B9A64 /* ReminderScheduler.swift in Sources */,
-				5E3CBF4F6BE0D85DE0F47B3C /* SnapshotStore.swift in Sources */,
-				CD2835AED68D9AA580BBF72E /* SpeechInput.swift in Sources */,
-				F597164FFB913B4E6CB8E5B9 /* ContentView.swift in Sources */,
-				BF8081EB33F9D09C7E1AAE22 /* PetSpriteView.swift in Sources */,
+				28435547DB856EF7D31294B7 /* TomaTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2E0D83544A1E342A5803A85D /* PBXTargetDependency */ = {
+		50418BAC9AB4C6EACEECD558 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Toma;
-			target = 959873B23E0E8667FD7999D5 /* Toma */;
-			targetProxy = E0D48B8BD92CFA2E0FD161B8 /* PBXContainerItemProxy */;
+			target = CEC5B4A32C0B9C3EFCFD269D /* Toma */;
+			targetProxy = 08B4DD0BC3C5A39539BE482F /* PBXContainerItemProxy */;
 		};
-		6DB8C6464E4A4C3F585F4EC6 /* PBXTargetDependency */ = {
+		8C4351ECB94C8351447D718D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Toma;
-			target = 959873B23E0E8667FD7999D5 /* Toma */;
-			targetProxy = 1DD2541427C397FD41235D5F /* PBXContainerItemProxy */;
+			target = CEC5B4A32C0B9C3EFCFD269D /* Toma */;
+			targetProxy = 65D127864D26C3015A3BA91B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		7567D9E21526DF2983B4208C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Toma.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Toma";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		80B471F55898B5DBB65B3994 /* Debug */ = {
+		022F9BA6AB7AA1E571BCF4ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -379,7 +370,44 @@
 			};
 			name = Debug;
 		};
-		91CEFC56DA7326546C3583B8 /* Debug */ = {
+		0470E643EE6C3644AF3958CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Toma/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		0A10182EECC25F0EC8C6184C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Toma.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Toma";
+			};
+			name = Debug;
+		};
+		5CBCD7828D3B78B9C4AD813F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -440,61 +468,7 @@
 			};
 			name = Debug;
 		};
-		9D77C28F313C2647E12A6695 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Toma/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		B1705D2C7198BD1280E916D8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Toma.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Toma";
-			};
-			name = Debug;
-		};
-		BA90A424F34654DEC88BDC45 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.uitests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = Toma;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		C71268316C9E6F9FE39763AF /* Release */ = {
+		784663A4E44BE651514A2BF1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -548,7 +522,7 @@
 			};
 			name = Release;
 		};
-		C76F8084BD0F377CD615E9A7 /* Debug */ = {
+		78F05D8759F1EAFE2DBB5213 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -566,49 +540,83 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
 			};
-			name = Debug;
+			name = Release;
+		};
+		8F6CA7E4D85736ECD5868785 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Toma;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C3F82996BCFC942CA46018A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jeezlabs.toma.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Toma.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Toma";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		54C27C7C0C3BF967083265F1 /* Build configuration list for PBXNativeTarget "TomaUITests" */ = {
+		547DEA976B4F1D2166BA3ED0 /* Build configuration list for PBXNativeTarget "Toma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BA90A424F34654DEC88BDC45 /* Release */,
-				80B471F55898B5DBB65B3994 /* Debug */,
+				78F05D8759F1EAFE2DBB5213 /* Release */,
+				0470E643EE6C3644AF3958CB /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5D323F44A367F93BE609A041 /* Build configuration list for PBXProject "Toma" */ = {
+		62432BE41DCDAD78610B0E7A /* Build configuration list for PBXNativeTarget "TomaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				91CEFC56DA7326546C3583B8 /* Debug */,
-				C71268316C9E6F9FE39763AF /* Release */,
+				C3F82996BCFC942CA46018A0 /* Release */,
+				0A10182EECC25F0EC8C6184C /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		63B004FEFEEF0EC0E991BE3D /* Build configuration list for PBXNativeTarget "TomaTests" */ = {
+		9C0100A5360154F85C76E9E7 /* Build configuration list for PBXNativeTarget "TomaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7567D9E21526DF2983B4208C /* Release */,
-				B1705D2C7198BD1280E916D8 /* Debug */,
+				8F6CA7E4D85736ECD5868785 /* Release */,
+				022F9BA6AB7AA1E571BCF4ED /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E6496AF7B43970FB69A50157 /* Build configuration list for PBXNativeTarget "Toma" */ = {
+		FA56E4C9619F44EEAA92F1CB /* Build configuration list for PBXProject "Toma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9D77C28F313C2647E12A6695 /* Release */,
-				C76F8084BD0F377CD615E9A7 /* Debug */,
+				5CBCD7828D3B78B9C4AD813F /* Debug */,
+				784663A4E44BE651514A2BF1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 4B1111D97BB878A2332054A7 /* Project object */;
+	rootObject = 2917543000B4AE23AAAD2DDF /* Project object */;
 }

@@ -288,6 +288,14 @@ enum PetStage: Int, Codable, CaseIterable {
         }
     }
 
+    var wireName: String {
+        switch self {
+        case .hatchling: "hatchling"
+        case .companion: "companion"
+        case .guardian: "guardian"
+        }
+    }
+
     var scale: Double {
         switch self {
         case .hatchling: 0.9
@@ -305,9 +313,58 @@ enum PetStage: Int, Codable, CaseIterable {
     }
 }
 
+enum PetPreset: String, Codable, CaseIterable, Identifiable {
+    case sprout
+    case spark
+    case cloud
+
+    var id: String { rawValue }
+
+    var defaultName: String {
+        switch self {
+        case .sprout: "芽芽"
+        case .spark: "火花"
+        case .cloud: "雲朵"
+        }
+    }
+
+    var role: String {
+        switch self {
+        case .sprout: "溫暖・陪伴型"
+        case .spark: "主動・行動型"
+        case .cloud: "冷靜・整理型"
+        }
+    }
+
+    var summary: String {
+        switch self {
+        case .sprout: "先接住你的感受，再陪你走下一步。"
+        case .spark: "主動把想法變成清楚、可批准的行動。"
+        case .cloud: "把混亂慢慢整理成安定、有順序的選擇。"
+        }
+    }
+
+    var archetype: PetArchetype {
+        switch self {
+        case .sprout: .warm
+        case .spark: .focused
+        case .cloud: .calm
+        }
+    }
+
+    static func resolving(_ legacyArchetype: PetArchetype) -> PetPreset {
+        switch legacyArchetype {
+        case .warm: .sprout
+        case .focused: .spark
+        case .calm, .adventurous: .cloud
+        }
+    }
+}
+
 enum PetArchetype: String, Codable, CaseIterable, Identifiable {
     case warm
     case focused
+    case calm
     case adventurous
 
     var id: String { rawValue }
@@ -316,6 +373,7 @@ enum PetArchetype: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .warm: "溫暖陪伴"
         case .focused: "專注行動"
+        case .calm: "冷靜整理"
         case .adventurous: "好奇探索"
         }
     }
@@ -324,6 +382,7 @@ enum PetArchetype: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .warm: "先理解你的感受，再一起往前。"
         case .focused: "把複雜事情拆成下一個可執行步驟。"
+        case .calm: "先整理脈絡，再提出安定清楚的下一步。"
         case .adventurous: "主動提出新角度，但仍由你批准行動。"
         }
     }
@@ -357,6 +416,295 @@ enum HatchJobPhase: String, Codable, Equatable {
     case failed
 }
 
+enum HatchStylePreset: String, Codable, CaseIterable, Identifiable {
+    case auto
+    case pixel
+    case plush
+    case clay
+    case sticker
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .auto: "自動搭配"
+        case .pixel: "像素"
+        case .plush: "絨毛"
+        case .clay: "黏土"
+        case .sticker: "貼紙"
+        }
+    }
+
+    var summary: String {
+        switch self {
+        case .auto: "由 Hatch 服務在既有角色特徵內選擇合適風格。"
+        case .pixel: "清楚輪廓、有限色盤與像素質感。"
+        case .plush: "柔軟材質、圓潤比例與玩偶質感。"
+        case .clay: "手作黏土、柔和光影與立體質感。"
+        case .sticker: "俐落外框、簡潔色塊與貼紙質感。"
+        }
+    }
+}
+
+enum LocalHatchRequestState: String, Codable, Equatable {
+    case savedLocally
+}
+
+private struct LocalHatchCanonicalPayload {
+    let requestSchemaVersion: Int
+    let clientRequestID: String
+    let petID: String
+    let petPreset: String
+    let targetStage: String
+    let basePackageID: String
+    let baseVersion: Int
+    let expectedNextVersion: Int
+    let appearance: String
+    let avoid: String?
+    let visualStyle: String
+}
+
+private enum LocalHatchCanonicalJSONValue {
+    case integer(Int)
+    case string(String)
+
+    var serialized: String {
+        switch self {
+        case let .integer(value): String(value)
+        case let .string(value): canonicalJSONString(value)
+        }
+    }
+}
+
+private func canonicalJSONString(_ value: String) -> String {
+    var result = "\""
+    for scalar in value.unicodeScalars {
+        switch scalar.value {
+        case 0x08: result += "\\b"
+        case 0x09: result += "\\t"
+        case 0x0A: result += "\\n"
+        case 0x0C: result += "\\f"
+        case 0x0D: result += "\\r"
+        case 0x22: result += "\\\""
+        case 0x5C: result += "\\\\"
+        case 0x00...0x1F: result += String(format: "\\u%04x", scalar.value)
+        default: result.unicodeScalars.append(scalar)
+        }
+    }
+    result += "\""
+    return result
+}
+
+private extension LocalHatchCanonicalPayload {
+    var data: Data {
+        var fields: [(key: String, value: LocalHatchCanonicalJSONValue)] = [
+            ("request_schema_version", .integer(requestSchemaVersion)),
+            ("client_request_id", .string(clientRequestID)),
+            ("pet_id", .string(petID)),
+            ("pet_preset", .string(petPreset)),
+            ("target_stage", .string(targetStage)),
+            ("base_package_id", .string(basePackageID)),
+            ("base_version", .integer(baseVersion)),
+            ("expected_next_version", .integer(expectedNextVersion)),
+            ("appearance", .string(appearance)),
+            ("visual_style", .string(visualStyle))
+        ]
+        if let avoid {
+            fields.append(("avoid", .string(avoid)))
+        }
+        let object = fields
+            .sorted { $0.key < $1.key }
+            .map { "\(canonicalJSONString($0.key)):\($0.value.serialized)" }
+            .joined(separator: ",")
+        return Data("{\(object)}".utf8)
+    }
+}
+
+struct LocalHatchRequest: Identifiable, Codable, Equatable {
+    static let currentSchemaVersion = 1
+
+    let schemaVersion: Int
+    let clientRequestID: UUID
+    let petID: UUID
+    let petPreset: PetPreset
+    let targetStage: PetStage
+    let basePackageID: UUID
+    let baseVersion: Int
+    let expectedNextVersion: Int
+    let appearance: String
+    let avoid: String?
+    let stylePreset: HatchStylePreset
+    let state: LocalHatchRequestState
+    let canonicalDigest: String
+    let createdAt: Date
+    let updatedAt: Date
+
+    var id: UUID { clientRequestID }
+
+    init(
+        schemaVersion: Int = currentSchemaVersion,
+        clientRequestID: UUID = UUID(),
+        petID: UUID,
+        petPreset: PetPreset,
+        targetStage: PetStage,
+        basePackageID: UUID,
+        baseVersion: Int,
+        expectedNextVersion: Int,
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset,
+        state: LocalHatchRequestState = .savedLocally,
+        canonicalDigest: String? = nil,
+        createdAt: Date,
+        updatedAt: Date
+    ) {
+        self.schemaVersion = schemaVersion
+        self.clientRequestID = clientRequestID
+        self.petID = petID
+        self.petPreset = petPreset
+        self.targetStage = targetStage
+        self.basePackageID = basePackageID
+        self.baseVersion = baseVersion
+        self.expectedNextVersion = expectedNextVersion
+        self.appearance = appearance
+        self.avoid = avoid
+        self.stylePreset = stylePreset
+        self.state = state
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.canonicalDigest = canonicalDigest ?? Self.digest(
+            schemaVersion: schemaVersion,
+            clientRequestID: clientRequestID,
+            petID: petID,
+            petPreset: petPreset,
+            targetStage: targetStage,
+            basePackageID: basePackageID,
+            baseVersion: baseVersion,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset
+        )
+    }
+
+    var isStructurallyValid: Bool {
+        schemaVersion == Self.currentSchemaVersion
+            && state == .savedLocally
+            && baseVersion > 0
+            && nextVersionIsValid
+            && appearance == appearance.trimmingCharacters(in: .whitespacesAndNewlines)
+            && (4...280).contains(appearance.count)
+            && avoidIsStructurallyValid
+            && updatedAt >= createdAt
+            && canonicalDigest.count == 64
+            && canonicalDigest.allSatisfy { $0.isHexDigit }
+            && canonicalDigest == canonicalDigest.lowercased()
+            && canonicalDigest == recomputedCanonicalDigest
+    }
+
+    private var nextVersionIsValid: Bool {
+        let (nextVersion, overflow) = baseVersion.addingReportingOverflow(1)
+        return !overflow && expectedNextVersion == nextVersion
+    }
+
+    var recomputedCanonicalDigest: String {
+        Self.digest(
+            schemaVersion: schemaVersion,
+            clientRequestID: clientRequestID,
+            petID: petID,
+            petPreset: petPreset,
+            targetStage: targetStage,
+            basePackageID: basePackageID,
+            baseVersion: baseVersion,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset
+        )
+    }
+
+    var canonicalPayloadData: Data {
+        Self.canonicalPayloadData(
+            schemaVersion: schemaVersion,
+            clientRequestID: clientRequestID,
+            petID: petID,
+            petPreset: petPreset,
+            targetStage: targetStage,
+            basePackageID: basePackageID,
+            baseVersion: baseVersion,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset
+        )
+    }
+
+    private var avoidIsStructurallyValid: Bool {
+        guard let avoid else { return true }
+        return !avoid.isEmpty
+            && avoid.count <= 160
+            && avoid == avoid.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private static func digest(
+        schemaVersion: Int,
+        clientRequestID: UUID,
+        petID: UUID,
+        petPreset: PetPreset,
+        targetStage: PetStage,
+        basePackageID: UUID,
+        baseVersion: Int,
+        expectedNextVersion: Int,
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> String {
+        let data = canonicalPayloadData(
+            schemaVersion: schemaVersion,
+            clientRequestID: clientRequestID,
+            petID: petID,
+            petPreset: petPreset,
+            targetStage: targetStage,
+            basePackageID: basePackageID,
+            baseVersion: baseVersion,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset
+        )
+        return SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+    }
+
+    private static func canonicalPayloadData(
+        schemaVersion: Int,
+        clientRequestID: UUID,
+        petID: UUID,
+        petPreset: PetPreset,
+        targetStage: PetStage,
+        basePackageID: UUID,
+        baseVersion: Int,
+        expectedNextVersion: Int,
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> Data {
+        let payload = LocalHatchCanonicalPayload(
+            requestSchemaVersion: schemaVersion,
+            clientRequestID: clientRequestID.uuidString.lowercased(),
+            petID: petID.uuidString.lowercased(),
+            petPreset: petPreset.rawValue,
+            targetStage: targetStage.wireName,
+            basePackageID: basePackageID.uuidString.lowercased(),
+            baseVersion: baseVersion,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            visualStyle: stylePreset.rawValue
+        )
+        return payload.data
+    }
+}
+
 struct HatchPackageReference: Identifiable, Codable, Equatable {
     let id: UUID
     let version: Int
@@ -385,15 +733,18 @@ struct HatchJob: Identifiable, Codable, Equatable {
 struct PetProfile: Identifiable, Codable, Equatable {
     let id: UUID
     var name: String
+    var preset: PetPreset?
     var archetype: PetArchetype
     var growth: PetGrowth
     var activePackage: HatchPackageReference
     var pendingHatchJob: HatchJob?
+    var pendingHatchRequest: LocalHatchRequest?
 
     static var initial: PetProfile {
         PetProfile(
             id: UUID(),
-            name: "苗苗",
+            name: PetPreset.sprout.defaultName,
+            preset: .sprout,
             archetype: .warm,
             growth: PetGrowth(),
             activePackage: HatchPackageReference(
@@ -404,8 +755,37 @@ struct PetProfile: Identifiable, Codable, Equatable {
                 atlasSHA256: "06477704465847004132c3a1fed4c0892b8d118d1f46018423fbfaf6aa216cd0",
                 validationReceiptID: UUID(uuidString: "897F8863-842C-46E8-9F30-2B6BF8AEE6B2")!
             ),
-            pendingHatchJob: nil
+            pendingHatchJob: nil,
+            pendingHatchRequest: nil
         )
+    }
+
+    var resolvedPreset: PetPreset {
+        preset ?? .resolving(archetype)
+    }
+
+    var presetStateIsConsistent: Bool {
+        guard let preset else { return true }
+        return preset.archetype == archetype
+    }
+
+    var localHatchStateIsConsistent: Bool {
+        guard let request = pendingHatchRequest else { return true }
+        return pendingHatchJob == nil
+            && request.petID == id
+            && request.isStructurallyValid
+    }
+
+    var localHatchRequestIsCurrent: Bool {
+        guard let request = pendingHatchRequest else { return true }
+        let (expectedNextVersion, overflow) = activePackage.version.addingReportingOverflow(1)
+        return localHatchStateIsConsistent
+            && !overflow
+            && request.petPreset == resolvedPreset
+            && request.targetStage == growth.stage
+            && request.basePackageID == activePackage.id
+            && request.baseVersion == activePackage.version
+            && request.expectedNextVersion == expectedNextVersion
     }
 
     @discardableResult

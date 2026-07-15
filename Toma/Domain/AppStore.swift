@@ -26,7 +26,10 @@ final class AppStore: ObservableObject {
         let initialError: String?
         do {
             let loaded = try snapshotStore.load() ?? .initial
-            guard loaded.schemaVersion == 2, loaded.growthLedgerIsConsistent else {
+            guard loaded.schemaVersion == 2,
+                  loaded.growthLedgerIsConsistent,
+                  loaded.petProfile.presetStateIsConsistent,
+                  loaded.petProfile.localHatchStateIsConsistent else {
                 throw ValidationError.invalidSnapshot
             }
             initialSnapshot = loaded
@@ -65,7 +68,7 @@ final class AppStore: ObservableObject {
         _ = commit(candidate, failureMessage: "無法保存模型選擇。")
     }
 
-    func updatePetProfile(name rawName: String, archetype: PetArchetype) -> Bool {
+    func updatePetProfile(name rawName: String, preset: PetPreset) -> Bool {
         let name = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !name.isEmpty, name.count <= 20 else {
             errorBanner = "寵物名字請控制在 1 到 20 個字。"
@@ -74,8 +77,88 @@ final class AppStore: ObservableObject {
 
         var candidate = snapshot
         candidate.petProfile.name = name
-        candidate.petProfile.archetype = archetype
+        candidate.petProfile.preset = preset
+        candidate.petProfile.archetype = preset.archetype
         return commit(candidate, failureMessage: "寵物設定沒有保存。")
+    }
+
+    func saveLocalHatchRequest(
+        appearance rawAppearance: String,
+        avoid rawAvoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> Bool {
+        guard snapshot.petProfile.pendingHatchRequest == nil else {
+            errorBanner = "已有一份保存在本機的孵化請求；請編輯或刪除它。"
+            return false
+        }
+        guard snapshot.petProfile.pendingHatchJob == nil else {
+            errorBanner = "已有進行中的 Hatch 工作，不能建立新的本機請求。"
+            return false
+        }
+        let timestamp = now()
+        guard let input = normalizedLocalHatchInput(
+            appearance: rawAppearance,
+            avoid: rawAvoid
+        ), let request = makeLocalHatchRequest(
+            appearance: input.appearance,
+            avoid: input.avoid,
+            stylePreset: stylePreset,
+            createdAt: timestamp,
+            updatedAt: timestamp
+        ) else {
+            return false
+        }
+
+        var candidate = snapshot
+        candidate.petProfile.pendingHatchRequest = request
+        return commit(candidate, failureMessage: "孵化請求沒有保存在本機。")
+    }
+
+    func updateLocalHatchRequest(
+        appearance rawAppearance: String,
+        avoid rawAvoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> Bool {
+        guard let existingRequest = snapshot.petProfile.pendingHatchRequest else {
+            errorBanner = "目前沒有可編輯的本機孵化請求。"
+            return false
+        }
+        guard snapshot.petProfile.pendingHatchJob == nil else {
+            errorBanner = "Hatch 工作已開始，不能覆蓋原本的本機請求。"
+            return false
+        }
+        guard let input = normalizedLocalHatchInput(
+            appearance: rawAppearance,
+            avoid: rawAvoid
+        ) else {
+            return false
+        }
+
+        let updatedAt = max(now(), existingRequest.createdAt)
+        guard let request = makeLocalHatchRequest(
+            appearance: input.appearance,
+            avoid: input.avoid,
+            stylePreset: stylePreset,
+            createdAt: existingRequest.createdAt,
+            updatedAt: updatedAt
+        ) else {
+            return false
+        }
+
+        var candidate = snapshot
+        candidate.petProfile.pendingHatchRequest = request
+        return commit(candidate, failureMessage: "孵化請求的編輯沒有保存。")
+    }
+
+    func deleteLocalHatchRequest() -> Bool {
+        guard snapshot.petProfile.pendingHatchRequest != nil else {
+            errorBanner = "目前沒有保存在本機的孵化請求。"
+            return false
+        }
+
+        var candidate = snapshot
+        candidate.petProfile.pendingHatchRequest = nil
+        return commit(candidate, failureMessage: "本機孵化請求沒有刪除。")
     }
 
     func send(_ rawMessage: String) async {
@@ -519,6 +602,54 @@ final class AppStore: ObservableObject {
         snapshot.memories.filter(\.isEnabledForAgent)
     }
 
+    private func normalizedLocalHatchInput(
+        appearance rawAppearance: String,
+        avoid rawAvoid: String?
+    ) -> (appearance: String, avoid: String?)? {
+        let appearance = rawAppearance.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard (4...280).contains(appearance.count) else {
+            errorBanner = "外觀描述請控制在 4 到 280 個字。"
+            return nil
+        }
+
+        let trimmedAvoid = rawAvoid?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let avoid = trimmedAvoid?.isEmpty == true ? nil : trimmedAvoid
+        guard (avoid?.count ?? 0) <= 160 else {
+            errorBanner = "避免項目請控制在 160 個字內。"
+            return nil
+        }
+        return (appearance, avoid)
+    }
+
+    private func makeLocalHatchRequest(
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> LocalHatchRequest? {
+        let activePackage = snapshot.petProfile.activePackage
+        let (expectedNextVersion, overflow) = activePackage.version.addingReportingOverflow(1)
+        guard !overflow else {
+            errorBanner = "目前外觀版本無法建立下一版請求。"
+            return nil
+        }
+
+        return LocalHatchRequest(
+            petID: snapshot.petProfile.id,
+            petPreset: snapshot.petProfile.resolvedPreset,
+            targetStage: snapshot.petProfile.growth.stage,
+            basePackageID: activePackage.id,
+            baseVersion: activePackage.version,
+            expectedNextVersion: expectedNextVersion,
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
+
     private func validateReply(_ reply: String) throws -> String {
         let trimmed = reply.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, trimmed.count <= 2_000 else { throw ValidationError.invalidReply }
@@ -628,8 +759,11 @@ final class AppStore: ObservableObject {
 
     @discardableResult
     private func commit(_ candidate: AppSnapshot, failureMessage: String) -> Bool {
-        guard candidate.schemaVersion == 2, candidate.growthLedgerIsConsistent else {
-            errorBanner = "成長紀錄與收據不一致，這次變更沒有保存。"
+        guard candidate.schemaVersion == 2,
+              candidate.growthLedgerIsConsistent,
+              candidate.petProfile.presetStateIsConsistent,
+              candidate.petProfile.localHatchStateIsConsistent else {
+            errorBanner = "本機狀態不一致，這次變更沒有保存。"
             return false
         }
         do {
