@@ -1,0 +1,7 @@
+.DS_Store
+.build/
+DerivedData/
+.tmp/
+*.xcuserstate
+xcuserdata/
+/Toma/Resources/pet-sprites.png
