@@ -450,6 +450,40 @@ enum LocalHatchRequestState: String, Codable, Equatable {
     case savedLocally
 }
 
+struct LocalHatchReview: Equatable {
+    let schemaVersion: Int
+    let petID: UUID
+    let petPreset: PetPreset
+    let targetStage: PetStage
+    let basePackageID: UUID
+    let baseVersion: Int
+    let expectedNextVersion: Int
+    let appearance: String
+    let avoid: String?
+    let stylePreset: HatchStylePreset
+
+    var isStructurallyValid: Bool {
+        schemaVersion == LocalHatchRequest.currentSchemaVersion
+            && baseVersion > 0
+            && nextVersionIsValid
+            && appearance == appearance.trimmingCharacters(in: .whitespacesAndNewlines)
+            && (4...280).contains(appearance.count)
+            && avoidIsStructurallyValid
+    }
+
+    private var nextVersionIsValid: Bool {
+        let (nextVersion, overflow) = baseVersion.addingReportingOverflow(1)
+        return !overflow && expectedNextVersion == nextVersion
+    }
+
+    private var avoidIsStructurallyValid: Bool {
+        guard let avoid else { return true }
+        return !avoid.isEmpty
+            && avoid.count <= 160
+            && avoid == avoid.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
 private struct LocalHatchCanonicalPayload {
     let requestSchemaVersion: Int
     let clientRequestID: String

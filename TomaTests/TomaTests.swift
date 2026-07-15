@@ -608,13 +608,116 @@ final class TomaTests: XCTestCase {
         XCTAssertEqual(PetPreset.cloud.archetype, .calm)
     }
 
+    func testLocalHatchReviewDoesNotPersistUntilExplicitlyConfirmed() throws {
+        let store = makeStore(persistence: MemorySnapshotStore())
+
+        let review = try XCTUnwrap(
+            store.reviewLocalHatchRequest(
+                appearance: "  薄荷綠、耳朵像兩片嫩芽  ",
+                avoid: "  文字與品牌標誌  ",
+                stylePreset: .plush
+            )
+        )
+
+        XCTAssertNil(store.snapshot.petProfile.pendingHatchRequest)
+        XCTAssertEqual(review.petPreset, .sprout)
+        XCTAssertEqual(review.targetStage, .hatchling)
+        XCTAssertEqual(review.appearance, "薄荷綠、耳朵像兩片嫩芽")
+        XCTAssertEqual(review.avoid, "文字與品牌標誌")
+        XCTAssertEqual(review.baseVersion + 1, review.expectedNextVersion)
+
+        XCTAssertTrue(store.saveLocalHatchReview(review))
+        let request = try XCTUnwrap(store.snapshot.petProfile.pendingHatchRequest)
+        XCTAssertEqual(request.appearance, review.appearance)
+        XCTAssertEqual(request.avoid, review.avoid)
+        XCTAssertEqual(request.petPreset, review.petPreset)
+        XCTAssertEqual(request.targetStage, review.targetStage)
+        XCTAssertEqual(request.basePackageID, review.basePackageID)
+        XCTAssertEqual(request.baseVersion, review.baseVersion)
+    }
+
+    func testLocalHatchReviewCannotSaveAfterPetIdentityChanges() throws {
+        let store = makeStore(persistence: MemorySnapshotStore())
+        let review = try XCTUnwrap(
+            store.reviewLocalHatchRequest(
+                appearance: "薄荷綠、耳朵像兩片嫩芽",
+                avoid: nil,
+                stylePreset: .plush
+            )
+        )
+
+        XCTAssertTrue(store.updatePetProfile(name: "火花", preset: .spark))
+        XCTAssertFalse(store.saveLocalHatchReview(review))
+        XCTAssertNil(store.snapshot.petProfile.pendingHatchRequest)
+        XCTAssertEqual(
+            store.errorBanner,
+            "Pet 身份、成長階段或外觀版本已改變；請重新檢查設計單。"
+        )
+    }
+
+    func testLocalHatchReviewCannotSaveAfterStageOrPackageChanges() async throws {
+        let growthStore = makeStore(
+            persistence: MemorySnapshotStore(),
+            gateway: GatewayStub(plan: makePlan(reminderEnabled: false))
+        )
+        let stageReview = try XCTUnwrap(
+            growthStore.reviewLocalHatchRequest(
+                appearance: "薄荷綠、耳朵像兩片嫩芽",
+                avoid: nil,
+                stylePreset: .plush
+            )
+        )
+
+        await growthStore.prepareTomorrow()
+        await growthStore.approvePendingPlan()
+
+        XCTAssertEqual(growthStore.stage, .companion)
+        XCTAssertFalse(growthStore.saveLocalHatchReview(stageReview))
+        XCTAssertNil(growthStore.snapshot.petProfile.pendingHatchRequest)
+
+        let packageStore = makeStore(persistence: MemorySnapshotStore())
+        let packageReview = try XCTUnwrap(
+            packageStore.reviewLocalHatchRequest(
+                appearance: "圓潤的白色小鳥",
+                avoid: nil,
+                stylePreset: .clay
+            )
+        )
+        let currentPackage = packageStore.snapshot.petProfile.activePackage
+        let changedBindings = [
+            (label: "package ID", id: UUID(), version: currentPackage.version),
+            (label: "package version", id: currentPackage.id, version: currentPackage.version + 1)
+        ]
+
+        for binding in changedBindings {
+            var advancedSnapshot = packageStore.snapshot
+            advancedSnapshot.petProfile.activePackage = HatchPackageReference(
+                id: binding.id,
+                version: binding.version,
+                targetStage: currentPackage.targetStage,
+                spriteVersionNumber: currentPackage.spriteVersionNumber,
+                atlasSHA256: currentPackage.atlasSHA256,
+                validationReceiptID: currentPackage.validationReceiptID
+            )
+            let reloadedStore = makeStore(
+                persistence: MemorySnapshotStore(initial: advancedSnapshot)
+            )
+
+            XCTAssertFalse(
+                reloadedStore.saveLocalHatchReview(packageReview),
+                "A changed \(binding.label) must invalidate the frozen review."
+            )
+            XCTAssertNil(reloadedStore.snapshot.petProfile.pendingHatchRequest)
+        }
+    }
+
     func testLocalHatchRequestTrimsBindsAndPersistsWithStableDigest() throws {
         let persistence = MemorySnapshotStore()
         var store = makeStore(persistence: persistence)
         let originalProfile = store.snapshot.petProfile
 
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "  雲朵般的白色小鳥  ",
                 avoid: "  皇冠  ",
                 stylePreset: .plush
@@ -680,17 +783,17 @@ final class TomaTests: XCTestCase {
         let store = makeStore(persistence: MemorySnapshotStore())
         let originalProfile = store.snapshot.petProfile
 
-        XCTAssertFalse(store.saveLocalHatchRequest(appearance: "  ", avoid: nil, stylePreset: .auto))
-        XCTAssertFalse(store.saveLocalHatchRequest(appearance: "abc", avoid: nil, stylePreset: .pixel))
+        XCTAssertFalse(store.saveReviewedLocalHatchRequest(appearance: "  ", avoid: nil, stylePreset: .auto))
+        XCTAssertFalse(store.saveReviewedLocalHatchRequest(appearance: "abc", avoid: nil, stylePreset: .pixel))
         XCTAssertFalse(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: String(repeating: "外", count: 281),
                 avoid: nil,
                 stylePreset: .clay
             )
         )
         XCTAssertFalse(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "白色圓耳小鳥",
                 avoid: String(repeating: "避", count: 161),
                 stylePreset: .sticker
@@ -699,7 +802,7 @@ final class TomaTests: XCTestCase {
         XCTAssertNil(store.snapshot.petProfile.pendingHatchRequest)
 
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "白色圓耳小鳥",
                 avoid: nil,
                 stylePreset: .pixel
@@ -707,7 +810,7 @@ final class TomaTests: XCTestCase {
         )
         let saved = try XCTUnwrap(store.snapshot.petProfile.pendingHatchRequest)
         XCTAssertFalse(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "另一隻不同的小鳥",
                 avoid: nil,
                 stylePreset: .clay
@@ -724,7 +827,7 @@ final class TomaTests: XCTestCase {
         let store = makeStore(persistence: persistence)
         let originalProfile = store.snapshot.petProfile
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "圓潤的白色小鳥",
                 avoid: "帽子",
                 stylePreset: .plush
@@ -733,7 +836,7 @@ final class TomaTests: XCTestCase {
         let first = try XCTUnwrap(store.snapshot.petProfile.pendingHatchRequest)
 
         XCTAssertTrue(
-            store.updateLocalHatchRequest(
+            store.updateReviewedLocalHatchRequest(
                 appearance: "  黏土質感的藍色小鳥  ",
                 avoid: "   ",
                 stylePreset: .clay
@@ -761,7 +864,7 @@ final class TomaTests: XCTestCase {
             gateway: GatewayStub(plan: makePlan(reminderEnabled: false))
         )
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "薄荷綠、耳朵像兩片嫩芽",
                 avoid: nil,
                 stylePreset: .plush
@@ -780,7 +883,7 @@ final class TomaTests: XCTestCase {
         XCTAssertFalse(store.snapshot.petProfile.localHatchRequestIsCurrent)
 
         XCTAssertTrue(
-            store.updateLocalHatchRequest(
+            store.updateReviewedLocalHatchRequest(
                 appearance: first.appearance,
                 avoid: first.avoid,
                 stylePreset: first.stylePreset
@@ -796,7 +899,7 @@ final class TomaTests: XCTestCase {
     func testChangingPetPresetMakesLocalHatchRequestStaleUntilResaved() throws {
         let store = makeStore(persistence: MemorySnapshotStore())
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "嫩芽耳朵與柔和的綠色",
                 avoid: nil,
                 stylePreset: .plush
@@ -811,7 +914,7 @@ final class TomaTests: XCTestCase {
         XCTAssertFalse(store.snapshot.petProfile.localHatchRequestIsCurrent)
 
         XCTAssertTrue(
-            store.updateLocalHatchRequest(
+            store.updateReviewedLocalHatchRequest(
                 appearance: "明亮、有速度感的橘紅色",
                 avoid: nil,
                 stylePreset: .sticker
@@ -828,7 +931,7 @@ final class TomaTests: XCTestCase {
         var store = makeStore(persistence: persistence)
         let originalProfile = store.snapshot.petProfile
         XCTAssertTrue(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "像素風格的藍色小鳥",
                 avoid: nil,
                 stylePreset: .pixel
@@ -864,7 +967,7 @@ final class TomaTests: XCTestCase {
         let originalGrowth = store.snapshot.petProfile.growth
 
         XCTAssertFalse(
-            store.saveLocalHatchRequest(
+            store.saveReviewedLocalHatchRequest(
                 appearance: "柔軟的白色小鳥",
                 avoid: nil,
                 stylePreset: .plush
@@ -1052,6 +1155,42 @@ final class TomaTests: XCTestCase {
             await Task.yield()
         }
         XCTFail("Timed out waiting for async test gate")
+    }
+}
+
+private extension AppStore {
+    @discardableResult
+    func saveReviewedLocalHatchRequest(
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> Bool {
+        guard let review = reviewLocalHatchRequest(
+            appearance: appearance,
+            avoid: avoid,
+            stylePreset: stylePreset
+        ) else {
+            return false
+        }
+        return saveLocalHatchReview(review)
+    }
+
+    @discardableResult
+    func updateReviewedLocalHatchRequest(
+        appearance: String,
+        avoid: String?,
+        stylePreset: HatchStylePreset
+    ) -> Bool {
+        guard let requestID = snapshot.petProfile.pendingHatchRequest?.clientRequestID,
+              let review = reviewLocalHatchRequest(
+                  appearance: appearance,
+                  avoid: avoid,
+                  stylePreset: stylePreset,
+                  replacing: requestID
+              ) else {
+            return false
+        }
+        return saveLocalHatchReview(review, replacing: requestID)
     }
 }
 

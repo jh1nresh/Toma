@@ -579,7 +579,9 @@ private struct PetProfileView: View {
                         .foregroundStyle(.secondary)
                 }
 
-                CustomHatchStatusSection()
+                CustomHatchStatusSection(
+                    presetSelectionIsSaved: preset == store.snapshot.petProfile.resolvedPreset
+                )
             }
             .onChange(of: preset) { previous, selected in
                 if trimmedName.isEmpty || name == previous.defaultName {

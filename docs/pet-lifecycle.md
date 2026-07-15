@@ -17,7 +17,7 @@
 
 選擇只改 Pet 身份、色彩徽記與個性表達，不會增加 XP 或權限。Foundation 的三隻 Pet 共用目前的本機動畫原型；三套各自完整的 8×11 v2 atlas 是後續素材里程碑，尚不能宣稱已完成。
 
-個人化外觀不是即時任意圖片。Foundation 只會先把使用者的文字與風格願望儲存在這台 iPhone；這個本機狀態不代表已送出，也不能冒充 Gateway 的 `queued`。完整流程是：
+個人化外觀不是即時任意圖片。Foundation 的 App 先讓使用者描述外觀與風格，再顯示綁定基礎 Pet、目前階段與外觀版本的 Hatch 設計單；只有使用者明確確認後，文字願望才會儲存在這台 iPhone。返回修改不會提前寫入資料；如果設計單顯示後 Pet、階段或 base package 改變，確認會被拒絕並要求重新檢查。這個本機狀態不代表已送出，也不能冒充 Gateway 的 `queued`。完整流程是：
 
 ```text
 saved locally -> Gateway accepted -> queued -> generating -> validating -> ready
@@ -26,7 +26,7 @@ saved locally -> Gateway accepted -> queued -> generating -> validating -> ready
                                                                       -> 使用者明確啟用
 ```
 
-本機願望綁定 `clientRequestID`、pet、所選預設 Pet、目前成長階段、目前 package 與預期下一版；修改會建立新的 ID 與 digest。切換預設 Pet 或進化後，原願望會保留但標成需要重新確認，不會自動重綁。使用者可以編輯或刪除，且它不會改變 XP、記憶、Agent 行為、工具權限或目前外觀。
+本機願望綁定 `clientRequestID`、pet、所選預設 Pet、目前成長階段、目前 package 與預期下一版；修改會建立新的 ID 與 digest。Pet Profile 中若有尚未保存的預設 Pet 變更，建立與編輯 Hatch 會先停用，避免畫面選了火花卻把願望綁到已保存的芽芽。切換預設 Pet 或進化後，原願望會保留但標成需要重新確認，不會自動重綁。使用者可以編輯或刪除，且它不會改變 XP、記憶、Agent 行為、工具權限或目前外觀。
 
 新 package 必須符合 hatch-pet 的 8×11 v2 atlas 合約、通過結構與視覺 QA，下載後由 App 對實際 bytes 計算 SHA-256。只有已驗證 Gateway 簽章、所有 request／pet／stage／version 綁定一致，且使用者再次明確確認的 package 能啟用；任何產生、驗證或下載失敗都繼續使用上一版 atlas。等待期間若 pet 階段或基礎版本改變，舊結果視為不相容，必須重新提出願望，不能自動改寫或啟用。
 

@@ -70,7 +70,7 @@ Gateway 可回傳純對話，或一份可檢查的 draft。draft 必須含穩定
 
 ## 自訂 Hatch
 
-Foundation 只保存 `LocalHatchRequest`，不會呼叫此端點，也不會自行進入 `queued`。Gateway 上線後，使用者在送出前要再次確認 canonical preview：
+Foundation 先顯示不持久化的本機 Hatch 設計單，使用者明確確認後才保存 `LocalHatchRequest`；它不會呼叫此端點，也不會自行進入 `queued`。Gateway 上線後，使用者在送出前還要再次確認 canonical preview：
 
 `POST /v1/pets/{pet_id}/hatches`
 
