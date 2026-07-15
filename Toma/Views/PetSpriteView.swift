@@ -3,6 +3,7 @@ import UIKit
 
 struct PetSpriteView: View {
     let name: String
+    let preset: PetPreset
     let activity: PetActivity
     let stage: PetStage
 
@@ -23,6 +24,18 @@ struct PetSpriteView: View {
         TimelineView(.animation(minimumInterval: animation.secondsPerFrame, paused: reduceMotion)) { timeline in
             let frame = reduceMotion ? 0 : animation.frame(at: timeline.date)
             ZStack {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [preset.tint.opacity(0.22), preset.tint.opacity(0.03)],
+                            center: .center,
+                            startRadius: 12,
+                            endRadius: 104
+                        )
+                    )
+                    .frame(width: 202, height: 202)
+                    .scaleEffect(stage.scale)
+
                 Ellipse()
                     .fill(.black.opacity(0.1))
                     .frame(width: 132, height: 22)
@@ -39,13 +52,27 @@ struct PetSpriteView: View {
                 } else {
                     Image(systemName: "bird.fill")
                         .font(.system(size: 92))
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(preset.tint)
                 }
+
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: preset.symbolName)
+                            .font(.headline.weight(.bold))
+                            .foregroundStyle(preset.tint)
+                            .frame(width: 38, height: 38)
+                            .background(.regularMaterial, in: Circle())
+                    }
+                    Spacer()
+                }
+                .frame(width: 208, height: 208)
+                .padding(.top, 8)
             }
             .frame(height: 220)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(name)，\(stage.title)，\(activity.label)")
+        .accessibilityLabel("\(name)，\(preset.defaultName)，\(stage.title)，\(activity.label)")
     }
 }
 

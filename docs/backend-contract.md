@@ -68,6 +68,47 @@ Gateway 可回傳純對話，或一份可檢查的 draft。draft 必須含穩定
 
 狀態限 `verified`、`partial`、`failed`、`reverted`。connector 回覆成功不等於驗證；需讀回結果才可標記 `verified`，也只有這種收據能增加 pet XP。server 必須在同一個 tenant-scoped transaction 寫入 receipt 與 `GrowthAward`。`POST /v1/receipts/{receipt_id}/undo` 必須冪等，產生含 `reverts_receipt_id` 的新復原收據並撤銷相連的 growth award。無法真正逆轉的動作要在預覽中明示，不能假裝支援 undo。
 
+## 自訂 Hatch
+
+Foundation 先顯示不持久化的本機 Hatch 設計單，使用者明確確認後才保存 `LocalHatchRequest`；它不會呼叫此端點，也不會自行進入 `queued`。Gateway 上線後，使用者在送出前還要再次確認 canonical preview：
+
+`POST /v1/pets/{pet_id}/hatches`
+
+```json
+{
+  "client_request_id": "uuid",
+  "request_schema_version": 1,
+  "request_digest": "sha256-of-canonical-request",
+  "pet_id": "uuid",
+  "pet_preset": "sprout",
+  "target_stage": "hatchling",
+  "base_package_id": "uuid",
+  "base_version": 1,
+  "expected_next_version": 2,
+  "visual_style": "pixel",
+  "appearance": "圓滾滾、薄荷綠、耳朵像嫩芽",
+  "avoid": "文字與品牌標誌"
+}
+```
+
+`request_digest` 是上述物件移除 `request_digest` 後的 canonical JSON bytes 之 SHA-256：UTF-8、key 依字典序排序、沒有多餘空白、UUID 使用小寫、stage／preset／style 使用文件中的字串值、整數使用十進位；`avoid` 為空時整個欄位省略。JSON string escaping 固定為：U+0022 輸出 bytes `5C 22`，U+005C 輸出 `5C 5C`；U+0008／0009／000A／000C／000D 分別輸出 `5C 62`／`5C 74`／`5C 6E`／`5C 66`／`5C 72`；其餘 U+0000–U+001F 使用小寫 ASCII `\u00xx`，U+002F 保持單一 byte `2F`，其他 Unicode scalar 直接以 UTF-8 輸出。Foundation 的本機 `state`、`createdAt`、`updatedAt` 不屬於已批准的 wire content，不進入 digest。跨平台實作必須通過 App 測試中涵蓋 slash、quote、backslash、控制字元與非 ASCII 的 golden vector。
+
+Gateway 必須從已驗證的 body 欄位與 path 重新建立同一 canonical JSON、重算 digest 並做 constant-time 比對；不相符時不得接受或排隊。path 與 body 的 `pet_id` 也必須完全相符，再從登入者與 tenant scope 重新解析 pet owner，不信任 client 傳入的 owner 關係。接受後回傳新的 `server_request_id`；只有這個已驗證回應能把狀態從本機的 `savedLocally` 推進到伺服器的 `queued`。後續事件必須回顯 client/server request ID、request digest、pet、stage、base/next version 與單調遞增的 `server_sequence`，並只允許：
+
+```text
+queued -> generating -> validating -> ready
+   |           |             |
+   +-----------+-------------+-> failed
+```
+
+相同 sequence 可冪等重播；較舊、跳階、反轉或 terminal 後更新全部拒絕。`ready` 必須附上已簽署 manifest／QA receipt，至少綁定：
+
+- owner／tenant、pet ID、所選 pet preset、client request ID、server request ID 與 request digest。
+- target stage、base package/version、package ID/version 與 `spriteVersionNumber = 2`。
+- 1536×2288、8×11 atlas 合約、視覺 QA 結果、atlas SHA-256、簽章 key ID 與有效期限。
+
+App 必須先驗證簽章，再對實際下載 bytes 計算 SHA-256 並執行 v2 atlas 驗證，產生只能由 verifier 建立的 `VerifiedHatchPackage`。只有這個型別可以出現在啟用確認畫面；使用者明確確認後才切換 `activePackage`。任何綁定不符、stage/base version 已改變、驗證失敗或使用者取消，都保留上一版外觀。
+
 ## 記憶、秘密與工具
 
 - 一次 run 只使用使用者明確選取的記憶；新記憶先預覽再確認，刪除要同步主存儲、索引與 cache tombstone。

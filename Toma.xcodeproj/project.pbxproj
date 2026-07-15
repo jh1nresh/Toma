@@ -14,6 +14,8 @@
 		5519CE9E4E66ADC83CBD15A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D662EA4EA927A3AD33230928 /* Foundation.framework */; };
 		5E3CBF4F6BE0D85DE0F47B3C /* SnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */; };
 		601FDD4A03758EB82704574B /* TomaIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABC77B99C77CAD219528A8 /* TomaIntents.swift */; };
+		7A1B2C3D4E5F60718293A4B5 /* CustomHatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1B2C3D4E5F60718293A4B7 /* CustomHatchView.swift */; };
+		7A1B2C3D4E5F60718293A4B6 /* PetIdentityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1B2C3D4E5F60718293A4B8 /* PetIdentityViews.swift */; };
 		8BB0C0E56F0012CFEF51C632 /* AgentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79C9E0CF4749C260969ACD /* AgentGateway.swift */; };
 		B33454D54AE15195A255FEA6 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83A7C51D85D16816B2317F9 /* AppStore.swift */; };
 		BE4CA32B9CE5C232FA03AC0E /* TomaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B50AA68662F974D4BEB787 /* TomaTests.swift */; };
@@ -47,6 +49,8 @@
 		61AB42FB3079E65DEBA72DDA /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Domain/Models.swift; sourceTree = "<group>"; };
 		6CC5817C7928E236815967C8 /* SpeechInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeechInput.swift; path = Services/SpeechInput.swift; sourceTree = "<group>"; };
 		7E4D97B737949CAFF88D1A1B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A1B2C3D4E5F60718293A4B7 /* CustomHatchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomHatchView.swift; path = Views/CustomHatchView.swift; sourceTree = "<group>"; };
+		7A1B2C3D4E5F60718293A4B8 /* PetIdentityViews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PetIdentityViews.swift; path = Views/PetIdentityViews.swift; sourceTree = "<group>"; };
 		830AC2AE55B06CD38A6A95FD /* TomaTrustLoopUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTrustLoopUITests.swift; sourceTree = "<group>"; };
 		8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SnapshotStore.swift; path = Services/SnapshotStore.swift; sourceTree = "<group>"; };
 		9EBF5F724D5863109BB597AB /* TomaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +121,8 @@
 				8EFEE31BC9A9E206EBE9AADC /* SnapshotStore.swift */,
 				6CC5817C7928E236815967C8 /* SpeechInput.swift */,
 				D24B5A056F611952B22BA5D3 /* ContentView.swift */,
+				7A1B2C3D4E5F60718293A4B7 /* CustomHatchView.swift */,
+				7A1B2C3D4E5F60718293A4B8 /* PetIdentityViews.swift */,
 				14B3545BD8F9264A2D998BED /* PetSpriteView.swift */,
 				7E4D97B737949CAFF88D1A1B /* Info.plist */,
 			);
@@ -325,6 +331,8 @@
 				5E3CBF4F6BE0D85DE0F47B3C /* SnapshotStore.swift in Sources */,
 				CD2835AED68D9AA580BBF72E /* SpeechInput.swift in Sources */,
 				F597164FFB913B4E6CB8E5B9 /* ContentView.swift in Sources */,
+				7A1B2C3D4E5F60718293A4B5 /* CustomHatchView.swift in Sources */,
+				7A1B2C3D4E5F60718293A4B6 /* PetIdentityViews.swift in Sources */,
 				BF8081EB33F9D09C7E1AAE22 /* PetSpriteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

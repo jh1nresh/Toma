@@ -8,5 +8,6 @@
 - 只暴露三個 App Intents：問電子雞、準備我的明天、繼續待確認任務。
 - `Toma/Resources/pet-sprites.png` 是私有、由使用者提供的素材；不得上傳、重新產生或送給外部 provider。
 - 新 hatch package 必須符合 hatch-pet 8×11 v2、通過 QA 與 SHA-256 驗證，並由使用者明確啟用；失敗時保留現有 atlas。
+- 本機保存的 hatch 願望只能標示為 `savedLocally`；只有經驗證的 Gateway 回應能標示 `queued`，不得用假進度或假預覽暗示圖片已生成。
 - Hermes 只能位於通過驗證的 Toma Gateway 後方。Hermes profile 不是多租戶安全邊界。
 - 宣稱完成前執行 `./scripts/check.sh`；修改 project 設定後也要確認 `Toma.xcodeproj`／`Toma` scheme 可建置。

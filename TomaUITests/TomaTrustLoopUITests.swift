@@ -11,19 +11,31 @@ final class TomaTrustLoopUITests: XCTestCase {
         XCTAssertTrue(profileButton.waitForExistence(timeout: 5))
         profileButton.tap()
 
+        let sparkPreset = element("pet.preset.spark", in: app)
+        XCTAssertTrue(sparkPreset.waitForExistence(timeout: 5))
+        sparkPreset.tap()
+
         let nameField = app.textFields["pet.name"]
         XCTAssertTrue(nameField.waitForExistence(timeout: 5))
+        let createHatch = element("hatch.create", in: app)
+        makeVisibleInForm(createHatch, in: app)
+        XCTAssertFalse(createHatch.isEnabled)
+        XCTAssertTrue(element("hatch.identityWarning", in: app).exists)
+
+        makeVisibleAtTop(nameField, in: app)
         nameField.tap()
         nameField.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 2))
         nameField.typeText("Tobi")
         app.buttons["pet.save"].tap()
 
         XCTAssertTrue(app.navigationBars["Tobi"].waitForExistence(timeout: 5))
+        XCTAssertEqual(element("pet.preset.current", in: app).label, "火花 · 主動・行動型")
 
         app.terminate()
         app.launchArguments = ["-ui-testing"]
         app.launch()
         XCTAssertTrue(app.navigationBars["Tobi"].waitForExistence(timeout: 5))
+        XCTAssertEqual(element("pet.preset.current", in: app).label, "火花 · 主動・行動型")
     }
 
     func testPreviewApproveReceiptAndUndo() {
@@ -85,6 +97,57 @@ final class TomaTrustLoopUITests: XCTestCase {
         XCTAssertEqual(stage.label, "初生夥伴")
     }
 
+    func testCustomHatchWishCanBeSavedLocally() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing-reset"]
+        app.launch()
+
+        let profileButton = app.buttons["pet.profile"]
+        XCTAssertTrue(profileButton.waitForExistence(timeout: 5))
+        profileButton.tap()
+        XCTAssertTrue(app.navigationBars["我的 Hatch Pet"].waitForExistence(timeout: 5))
+
+        let create = element("hatch.create", in: app)
+        makeVisibleInForm(create, in: app)
+        create.tap()
+
+        let appearance = element("hatch.appearance", in: app)
+        XCTAssertTrue(appearance.waitForExistence(timeout: 5))
+        appearance.tap()
+        appearance.typeText("mint green pet with two leaf ears")
+
+        let review = app.buttons["hatch.review"]
+        XCTAssertTrue(review.isEnabled)
+        review.tap()
+        XCTAssertTrue(element("hatch.review.summary", in: app).waitForExistence(timeout: 5))
+        attach("05-hatch-review", app: app)
+
+        app.buttons["hatch.review.back"].tap()
+        let restoredAppearance = element("hatch.appearance", in: app)
+        XCTAssertTrue(restoredAppearance.waitForExistence(timeout: 5))
+        XCTAssertTrue(
+            (restoredAppearance.value as? String)?.contains("mint green pet") == true
+        )
+
+        app.buttons["hatch.review"].tap()
+        XCTAssertTrue(app.buttons["hatch.confirmSave"].waitForExistence(timeout: 5))
+        app.buttons["hatch.confirmSave"].tap()
+
+        let status = element("hatch.status", in: app)
+        XCTAssertTrue(status.waitForExistence(timeout: 5))
+        XCTAssertEqual(status.label, "只儲存在本機・尚未送出")
+        attach("06-hatch-saved", app: app)
+
+        app.terminate()
+        app.launchArguments = ["-ui-testing"]
+        app.launch()
+        XCTAssertTrue(app.buttons["pet.profile"].waitForExistence(timeout: 5))
+        app.buttons["pet.profile"].tap()
+        let restoredStatus = element("hatch.status", in: app)
+        makeVisibleInForm(restoredStatus, in: app)
+        XCTAssertEqual(restoredStatus.label, "只儲存在本機・尚未送出")
+    }
+
     private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {
         app.descendants(matching: .any).matching(identifier: identifier).firstMatch
     }
@@ -123,6 +186,14 @@ final class TomaTrustLoopUITests: XCTestCase {
             scrollView.swipeDown()
         }
         XCTFail("Top element never became visible: \(element)")
+    }
+
+    private func makeVisibleInForm(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<8 {
+            if element.exists, element.isHittable { return }
+            app.swipeUp()
+        }
+        XCTFail("Form element never became visible: \(element)")
     }
 
     private func attach(_ name: String, app: XCUIApplication) {
