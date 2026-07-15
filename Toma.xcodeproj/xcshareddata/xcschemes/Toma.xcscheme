@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CEC5B4A32C0B9C3EFCFD269D"
+               BlueprintIdentifier = "959873B23E0E8667FD7999D5"
                BuildableName = "Toma.app"
                BlueprintName = "Toma"
                ReferencedContainer = "container:Toma.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F2EE2B5CEB89F68E556D6AA"
+               BlueprintIdentifier = "BBE7994CD856E1F7070EB628"
                BuildableName = "TomaTests.xctest"
                BlueprintName = "TomaTests"
                ReferencedContainer = "container:Toma.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9CDE292C409A43897EF476E1"
+               BlueprintIdentifier = "3F58B7D14FAE368859C4E5E5"
                BuildableName = "TomaUITests.xctest"
                BlueprintName = "TomaUITests"
                ReferencedContainer = "container:Toma.xcodeproj">
@@ -58,7 +58,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CEC5B4A32C0B9C3EFCFD269D"
+            BlueprintIdentifier = "959873B23E0E8667FD7999D5"
             BuildableName = "Toma.app"
             BlueprintName = "Toma"
             ReferencedContainer = "container:Toma.xcodeproj">
@@ -69,7 +69,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F2EE2B5CEB89F68E556D6AA"
+               BlueprintIdentifier = "BBE7994CD856E1F7070EB628"
                BuildableName = "TomaTests.xctest"
                BlueprintName = "TomaTests"
                ReferencedContainer = "container:Toma.xcodeproj">
@@ -79,7 +79,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9CDE292C409A43897EF476E1"
+               BlueprintIdentifier = "3F58B7D14FAE368859C4E5E5"
                BuildableName = "TomaUITests.xctest"
                BlueprintName = "TomaUITests"
                ReferencedContainer = "container:Toma.xcodeproj">
@@ -101,7 +101,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CEC5B4A32C0B9C3EFCFD269D"
+            BlueprintIdentifier = "959873B23E0E8667FD7999D5"
             BuildableName = "Toma.app"
             BlueprintName = "Toma"
             ReferencedContainer = "container:Toma.xcodeproj">
@@ -118,7 +118,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CEC5B4A32C0B9C3EFCFD269D"
+            BlueprintIdentifier = "959873B23E0E8667FD7999D5"
             BuildableName = "Toma.app"
             BlueprintName = "Toma"
             ReferencedContainer = "container:Toma.xcodeproj">
