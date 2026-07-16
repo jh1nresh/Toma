@@ -29,6 +29,9 @@ end
 info_reference = app_group.new_file("Info.plist")
 info_reference.include_in_index = "1"
 
+assets_reference = app_group.new_file("Assets.xcassets")
+app_target.resources_build_phase.add_file_reference(assets_reference)
+
 private_sprite_phase = app_target.new_shell_script_build_phase("Copy private pet sprite for local Debug builds")
 private_sprite_phase.always_out_of_date = "1"
 private_sprite_phase.shell_path = "/bin/sh"
@@ -69,6 +72,10 @@ app_target.build_configurations.each do |configuration|
   settings["TARGETED_DEVICE_FAMILY"] = "1"
   settings["MARKETING_VERSION"] = "0.1.0"
   settings["CURRENT_PROJECT_VERSION"] = "1"
+  settings["DEVELOPMENT_TEAM"] = "JC6858UYM9"
+  settings["CODE_SIGN_STYLE"] = "Automatic"
+  settings["ASSETCATALOG_COMPILER_APPICON_NAME"] = "AppIcon"
+  settings["ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME"] = "AccentColor"
   settings["ENABLE_PREVIEWS"] = "YES"
 end
 

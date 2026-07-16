@@ -24,6 +24,7 @@
 		CD2835AED68D9AA580BBF72E /* SpeechInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC5817C7928E236815967C8 /* SpeechInput.swift */; };
 		E1EEF87B8C0CF7E3BD50713A /* TomaTrustLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830AC2AE55B06CD38A6A95FD /* TomaTrustLoopUITests.swift */; };
 		F597164FFB913B4E6CB8E5B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B5A056F611952B22BA5D3 /* ContentView.swift */; };
+		F0A1C0E1B2D3E4F506070809 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0A1C0E1B2D3E4F50607080A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		DA79C9E0CF4749C260969ACD /* AgentGateway.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AgentGateway.swift; path = Services/AgentGateway.swift; sourceTree = "<group>"; };
 		E2B50AA68662F974D4BEB787 /* TomaTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TomaTests.swift; sourceTree = "<group>"; };
 		F22971B2DDAED50503D030B5 /* TomaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0A1C0E1B2D3E4F50607080A /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				7A1B2C3D4E5F60718293A4B8 /* PetIdentityViews.swift */,
 				14B3545BD8F9264A2D998BED /* PetSpriteView.swift */,
 				7E4D97B737949CAFF88D1A1B /* Info.plist */,
+				F0A1C0E1B2D3E4F50607080A /* Assets.xcassets */,
 			);
 			name = Toma;
 			path = Toma;
@@ -267,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0A1C0E1B2D3E4F506070809 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,7 +458,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JC6858UYM9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Toma/Info.plist;
@@ -562,7 +568,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JC6858UYM9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Toma/Info.plist;
